@@ -1,0 +1,46 @@
+buildscript {
+
+	repositories {
+		mavenCentral()
+	}
+}
+
+plugins {
+	id 'java-library'
+	id 'org.springframework.boot' version "${springBoot}"
+	id 'io.spring.dependency-management' version "${dependencyManagement}"
+}
+
+allprojects {
+	group = 'com.github.fsdevon.bbbms'
+	version = '1.0.0-SNAPSHOT'
+	sourceCompatibility = '14'
+}
+subprojects {
+
+	apply plugin: 'org.springframework.boot'
+	apply plugin: 'io.spring.dependency-management'
+	apply plugin: 'java-library'
+	apply plugin: 'java'
+
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		compileOnly 'org.projectlombok:lombok'
+		developmentOnly 'org.springframework.boot:spring-boot-devtools'
+		annotationProcessor 'org.projectlombok:lombok'
+		testImplementation('org.springframework.boot:spring-boot-starter-test') {
+			exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+		}
+	}
+
+	test {
+		useJUnitPlatform()
+	}
+}
+
+bootJar {
+	enabled = false
+}
